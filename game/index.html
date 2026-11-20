@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palmera Bay — an open-world crime game</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #0c1018; font-family: system-ui, -apple-system, sans-serif; }
+  #game { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+  #minimap {
+    position: fixed; left: 12px; bottom: 12px; width: 220px; height: 160px;
+    border: 2px solid rgba(255, 255, 255, 0.35); border-radius: 8px;
+    background: #20242c; z-index: 5;
+  }
+  #status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .overlay {
+    position: fixed; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; z-index: 10;
+    background: linear-gradient(160deg, rgba(12, 20, 40, 0.88), rgba(60, 20, 40, 0.82));
+    color: #f2f2f2; text-align: center; padding: 24px;
+  }
+  .hidden { display: none !important; }
+  .title-main {
+    font-size: 72px; font-weight: 900; letter-spacing: 4px; margin: 0;
+    background: linear-gradient(90deg, #ffd94d, #ff7a59, #ff4d6d);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    text-shadow: 0 4px 30px rgba(255, 122, 89, 0.35);
+  }
+  .subtitle { font-size: 20px; color: #ffd94d; letter-spacing: 6px; margin: 8px 0 24px; }
+  .story { max-width: 560px; font-size: 16px; line-height: 1.6; color: #d8dce4; margin: 0 0 24px; }
+  .controls { font-size: 14px; line-height: 1.9; color: #aab0bd; margin-bottom: 28px; }
+  .controls b { color: #ffffff; }
+  .btn {
+    display: inline-block; margin: 6px; padding: 13px 34px; font-size: 17px; font-weight: 700;
+    color: #141414; background: #ffd94d; border: none; border-radius: 10px; cursor: pointer;
+  }
+  .btn:hover { background: #ffe27a; }
+  .btn.secondary { background: rgba(255, 255, 255, 0.16); color: #ffffff; }
+  .btn.secondary:hover { background: rgba(255, 255, 255, 0.28); }
+  .btn:disabled { opacity: 0.4; cursor: default; }
+  h2.screen-title { font-size: 44px; margin: 0 0 12px; letter-spacing: 3px; }
+  .screen-sub { font-size: 16px; color: #c8ccd4; margin: 0 0 28px; max-width: 520px; line-height: 1.6; }
+  #dead-title { font-size: 84px; font-weight: 900; letter-spacing: 8px; color: #ff3b30; margin: 0; }
+</style>
+</head>
+<body>
+<canvas id="game" aria-label="Palmera Bay: drive and walk around a sun-soaked coastal city, steal cars, dodge the police and run missions"></canvas>
+<canvas id="minimap" width="220" height="160" aria-label="Minimap"></canvas>
+<p id="status" role="status" aria-live="polite"></p>
+
+<div id="screen-title" class="overlay">
+  <h1 class="title-main">PALMERA BAY</h1>
+  <div class="subtitle">SUN · SAND · SIN</div>
+  <p class="story">Milo Reyes came back to Palmera Bay with an empty wallet and a fast right foot.
+    The Bay Crew runs this city — and Eddie says there's work for a wheelman who asks no questions.
+    Steal cars, lose the cops, run the jobs, and take the big score.</p>
+  <div class="controls">
+    <b>WASD / arrows</b> move &amp; drive &nbsp;·&nbsp; <b>Shift</b> run &nbsp;·&nbsp; <b>E</b> enter / steal car &nbsp;·&nbsp; <b>F</b> punch<br>
+    <b>Mouse click / Space</b> shoot &nbsp;·&nbsp; <b>Q</b> start next mission &nbsp;·&nbsp; <b>P</b> pause &nbsp;·&nbsp; <b>M</b> mute
+  </div>
+  <div>
+    <button id="btn-new" class="btn">New Game</button>
+    <button id="btn-continue" class="btn secondary">Continue</button>
+    <button id="btn-mute" class="btn secondary">Sound: On</button>
+  </div>
+</div>
+
+<div id="screen-pause" class="overlay hidden">
+  <h2 class="screen-title">PAUSED</h2>
+  <p class="screen-sub">The city waits for no one — except right now.</p>
+  <div>
+    <button id="btn-resume" class="btn">Resume</button>
+    <button id="btn-save" class="btn secondary">Save Game</button>
+    <button id="btn-restart" class="btn secondary">Restart</button>
+    <button id="btn-quit" class="btn secondary">Quit to Title</button>
+  </div>
+</div>
+
+<div id="screen-dead" class="overlay hidden">
+  <h1 id="dead-title">WASTED</h1>
+  <p id="dead-sub" class="screen-sub"></p>
+  <div>
+    <button id="btn-respawn" class="btn">Back on the Streets</button>
+  </div>
+</div>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
